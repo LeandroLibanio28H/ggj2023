@@ -12,6 +12,8 @@ onready var root2 := $Roots/Root2 as Position2D
 onready var root3 := $Roots/Root3 as Position2D
 onready var root4 := $Roots/Root4 as Position2D
 
+onready var roots_node := $Roots as Node2D
+
 
 var _can_hook := true
 var _connected := false
@@ -21,7 +23,8 @@ var _root_name : String = "PlantRoot"
 
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	roots_node.rotate(deg2rad(360) * delta)
 	if not _connected:
 		return
 	if Input.is_action_pressed("move"):

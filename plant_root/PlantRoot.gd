@@ -22,16 +22,19 @@ var _direction := Vector2.UP
 var _connected := false
 var _is_setup := false
 var _normal := Vector2()
+var _rotation_speed : float = 0.0
 
 
 
 func _ready() -> void:
+	randomize()
+	_rotation_speed = deg2rad(360 * rand_range(1.0, 3.0))
 	set_as_toplevel(true)
 
 
 func _physics_process(delta: float) -> void:
 	if not _connected and _is_setup:
-		rotate(deg2rad(720 * delta))
+		rotate(_rotation_speed * delta)
 		position += _direction * delta * _move_speed
 	elif root1.points.size() + root2.points.size() + root3.points.size() + root4.points.size() == 0:
 		queue_free()
