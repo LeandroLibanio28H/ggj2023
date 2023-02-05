@@ -1,0 +1,145 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://world/World.tscn" type="PackedScene" id=1]
+[ext_resource path="res://particle_plant/ParticlePlant.tscn" type="PackedScene" id=2]
+[ext_resource path="res://turret/Turret.tscn" type="PackedScene" id=3]
+[ext_resource path="res://game/Game.gd" type="Script" id=4]
+[ext_resource path="res://collectibles/KeyCard.tscn" type="PackedScene" id=5]
+[ext_resource path="res://interactible/Door.tscn" type="PackedScene" id=6]
+[ext_resource path="res://data/font.tres" type="DynamicFont" id=7]
+[ext_resource path="res://data/texture/leftclick.png" type="Texture" id=8]
+[ext_resource path="res://data/texture/rightclick.png" type="Texture" id=9]
+[ext_resource path="res://interactible/End.tscn" type="PackedScene" id=10]
+
+[node name="Game" type="Node2D" groups=["game_controller"]]
+script = ExtResource( 4 )
+
+[node name="Tutorials" type="Node2D" parent="."]
+z_index = -10
+z_as_relative = false
+
+[node name="LaunchRoot" type="Label" parent="Tutorials"]
+margin_left = -2048.0
+margin_top = 256.0
+margin_right = -1280.0
+margin_bottom = 640.0
+custom_fonts/font = ExtResource( 7 )
+text = "Press     to launch your roots and connect to Brown walls"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="TextureRect" type="TextureRect" parent="Tutorials/LaunchRoot"]
+margin_left = 230.0
+margin_top = -45.0
+margin_right = 398.0
+margin_bottom = 123.0
+texture = ExtResource( 8 )
+expand = true
+
+[node name="Move" type="Label" parent="Tutorials"]
+margin_left = -260.0
+margin_top = 798.0
+margin_right = 508.0
+margin_bottom = 1182.0
+custom_fonts/font = ExtResource( 7 )
+text = "You can use     to move in connected brown walls"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="TextureRect" type="TextureRect" parent="Tutorials/Move"]
+margin_left = 461.0
+margin_top = 3.0
+margin_right = 629.0
+margin_bottom = 171.0
+texture = ExtResource( 9 )
+expand = true
+
+[node name="MoveAround" type="Label" parent="Tutorials"]
+margin_left = 564.0
+margin_top = 1859.0
+margin_right = 1332.0
+margin_bottom = 2243.0
+custom_fonts/font = ExtResource( 7 )
+text = "It's possible to move around brown walls if there's no obstacles"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="KillTurrets" type="Label" parent="Tutorials"]
+margin_left = 1258.0
+margin_top = 426.0
+margin_right = 2026.0
+margin_bottom = 810.0
+custom_fonts/font = ExtResource( 7 )
+text = "If you launch your root in a turret you will destroy it"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="Key" type="Label" parent="Tutorials"]
+margin_left = 1401.0
+margin_top = 11898.0
+margin_right = 2169.0
+margin_bottom = 12282.0
+custom_fonts/font = ExtResource( 7 )
+text = "Doors can only be opened if you have their proper keycards"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="Victory" type="Label" parent="Tutorials"]
+margin_left = 1301.0
+margin_top = 14866.0
+margin_right = 2069.0
+margin_bottom = 15349.0
+custom_fonts/font = ExtResource( 7 )
+text = "You win the level when you escape the laboratory.
+For now, there's only this floor to play.
+Come back later."
+align = 1
+valign = 1
+autowrap = true
+
+[node name="World" parent="." instance=ExtResource( 1 )]
+
+[node name="Entities" type="Node2D" parent="."]
+
+[node name="ParticlePlant" parent="Entities" instance=ExtResource( 2 )]
+position = Vector2( -1664, -256 )
+
+[node name="Turret" parent="Entities" instance=ExtResource( 3 )]
+position = Vector2( 1664, 128 )
+
+[node name="Turret2" parent="Entities" instance=ExtResource( 3 )]
+position = Vector2( -1152, 3456 )
+
+[node name="Turret3" parent="Entities" instance=ExtResource( 3 )]
+position = Vector2( -1024, 6784 )
+
+[node name="Turret4" parent="Entities" instance=ExtResource( 3 )]
+position = Vector2( 1152, 8704 )
+
+[node name="Turret5" parent="Entities" instance=ExtResource( 3 )]
+position = Vector2( -768, 12672 )
+
+[node name="Turret6" parent="Entities" instance=ExtResource( 3 )]
+position = Vector2( 128, 16256 )
+
+[node name="Collectibles" type="Node2D" parent="."]
+
+[node name="KeyCard" parent="Collectibles" instance=ExtResource( 5 )]
+position = Vector2( -512, 9216 )
+key = "#001"
+
+[node name="Interactible" type="Node2D" parent="."]
+
+[node name="Door" parent="Interactible" instance=ExtResource( 6 )]
+modulate = Color( 0.14902, 0.376471, 0.643137, 1 )
+position = Vector2( 1792, 11648 )
+scale = Vector2( 4, 1 )
+key = "#001"
+
+[node name="End" parent="Interactible" instance=ExtResource( 10 )]
+position = Vector2( 1684, 14513 )

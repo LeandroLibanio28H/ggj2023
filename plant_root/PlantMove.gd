@@ -14,6 +14,7 @@ onready var _shape := $Shape.shape as Shape2D
 
 var _direction := Vector2.UP
 var _connected := false
+var _inactive := false
 var _is_setup := false
 
 
@@ -48,16 +49,30 @@ func _on_Timer_timeout() -> void:
 
 
 func _on_PlantRoot_body_entered(body: Node) -> void:
+	if _inactive:
+		return
 	if not body.is_in_group("connected"):
+		queue_free()
+		_inactive = true
 		return
 	var shape : CollisionShape2D = body.get_node("Shape") as CollisionShape2D
 	if not shape:
+		queue_free()
+		_inactive = true
 		return
 	var points := _shape.collide_and_get_contacts(global_transform, shape.shape, shape.global_transform)
 	if points.size() < 2:
+		queue_free()
+		_inactive = true
 		return
 	position = points[1]
 	_connected = true
+	var colliding_bodies : Array = get_overlapping_bodies()
+	for col_body in colliding_bodies:
+		if col_body.is_in_group("world"):
+			queue_free()
+			_inactive = true
+			return
 	var normal : Vector2 = (points[1] - points[0]).normalized()
 	emit_signal("root_connected", [self.global_position, normal])
 	body.add_to_group("connected")

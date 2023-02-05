@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "GameController",
+"language": "GDScript",
+"path": "res://game/Game.gd"
+}, {
 "base": "Area2D",
 "class": "ParticlePlant",
 "language": "GDScript",
@@ -30,6 +35,7 @@ _global_script_classes=[ {
 "path": "res://plant_root/RootHair.gd"
 } ]
 _global_script_class_icons={
+"GameController": "",
 "ParticlePlant": "",
 "PlantMove": "",
 "PlantRoot": "",
@@ -39,8 +45,14 @@ _global_script_class_icons={
 [application]
 
 config/name="Global Game Jam 2023"
-run/main_scene="res://world/textures/World.tscn"
+run/main_scene="res://menu/Title.tscn"
+boot_splash/image="res://data/splash.png"
+boot_splash/bg_color=Color( 1, 1, 1, 1 )
 config/icon="res://icon.png"
+
+[debug]
+
+gdscript/warnings/return_value_discarded=false
 
 [display]
 
@@ -48,6 +60,7 @@ window/size/width=1920
 window/size/height=1080
 window/size/test_width=1280
 window/size/test_height=720
+mouse_cursor/custom_image="res://cursor.png"
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 
@@ -71,7 +84,13 @@ move={
 [layer_names]
 
 2d_physics/layer_1="map"
-2d_physics/layer_2="plant"
+2d_physics/layer_2="connectable"
+2d_physics/layer_3="plant"
+2d_physics/layer_4="detector"
+2d_physics/layer_5="hurtbox"
+2d_physics/layer_6="root"
+2d_physics/layer_7="collectible"
+2d_physics/layer_8="interactible"
 
 [physics]
 

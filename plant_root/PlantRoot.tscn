@@ -1,18 +1,21 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://plant_root/PlantRoot.gd" type="Script" id=1]
 [ext_resource path="res://plant_root/RootHair.gd" type="Script" id=2]
+[ext_resource path="res://data/audio/throw_1.ogg" type="AudioStream" id=3]
 
 [sub_resource type="Curve" id=2]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 64.0
+radius = 32.0
 
 [node name="PlantRoot" type="Area2D"]
 show_behind_parent = true
 z_index = -1
 z_as_relative = false
+collision_layer = 32
+collision_mask = 211
 script = ExtResource( 1 )
 _move_speed = 3000.0
 
@@ -34,7 +37,7 @@ z_as_relative = false
 points = PoolVector2Array( -286, 207, -146, 92, -110, 14, -34, -38 )
 width = 32.0
 width_curve = SubResource( 2 )
-default_color = Color( 0.0292664, 0.535156, 0.179452, 1 )
+default_color = Color( 0.45098, 0.368627, 0.235294, 1 )
 joint_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
@@ -55,7 +58,7 @@ z_as_relative = false
 points = PoolVector2Array( -286, 207, -146, 92, -110, 14, -34, -38 )
 width = 32.0
 width_curve = SubResource( 2 )
-default_color = Color( 0.0292664, 0.535156, 0.179452, 1 )
+default_color = Color( 0.45098, 0.368627, 0.235294, 1 )
 joint_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
@@ -76,7 +79,7 @@ z_as_relative = false
 points = PoolVector2Array( -286, 207, -146, 92, -110, 14, -34, -38 )
 width = 32.0
 width_curve = SubResource( 2 )
-default_color = Color( 0.0292664, 0.535156, 0.179452, 1 )
+default_color = Color( 0.45098, 0.368627, 0.235294, 1 )
 joint_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
@@ -97,7 +100,7 @@ z_as_relative = false
 points = PoolVector2Array( -286, 207, -146, 92, -110, 14, -34, -38 )
 width = 32.0
 width_curve = SubResource( 2 )
-default_color = Color( 0.0292664, 0.535156, 0.179452, 1 )
+default_color = Color( 0.45098, 0.368627, 0.235294, 1 )
 joint_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
@@ -113,5 +116,9 @@ shape = SubResource( 1 )
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 
+[node name="LaunchSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[connection signal="area_entered" from="." to="." method="_on_PlantRoot_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_PlantRoot_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

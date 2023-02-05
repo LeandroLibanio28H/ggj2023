@@ -51,6 +51,7 @@ func setup(direction : Vector2, time : float, normal : Vector2) -> void:
 		_timer.wait_time = time
 		_timer.one_shot = true
 		_timer.start()
+		$LaunchSound.play()
 
 
 func _on_Timer_timeout() -> void:
@@ -63,7 +64,10 @@ func _on_Timer_timeout() -> void:
 func _on_PlantRoot_body_entered(body: Node) -> void:
 	if body.is_in_group("connected"):
 		return
-	var shape : CollisionShape2D = body.get_node("Shape") as CollisionShape2D
+	if !body.is_in_group("connectable"):
+		queue_free()
+		return
+	var shape :  = body.get_node("Shape") as CollisionShape2D
 	if not shape:
 		return
 	var points := _shape.collide_and_get_contacts(global_transform, shape.shape, shape.global_transform)
@@ -71,6 +75,7 @@ func _on_PlantRoot_body_entered(body: Node) -> void:
 		return
 	position = points[1]
 	_disable_root(true)
+	_connected = true
 	var normal : Vector2 = (points[1] - points[0]).normalized()
 	emit_signal("root_connected", [self.global_position, normal])
 	body.add_to_group("connected")
@@ -85,3 +90,18 @@ func _disable_root(done := false) -> void:
 	root2.done = done
 	root3.done = done
 	root4.done = done
+
+
+func _on_PlantRoot_area_entered(area: Area2D) -> void:
+	if area.is_in_group("enemy"):
+		area.disable_turret()
+		_disable_root()
+		_is_setup = false
+	elif area.is_in_group("collectible"):
+		area.run()
+		_disable_root()
+		_is_setup = false
+	elif area.is_in_group("interactible"):
+		area.run()
+		_disable_root()
+		_is_setup = false
